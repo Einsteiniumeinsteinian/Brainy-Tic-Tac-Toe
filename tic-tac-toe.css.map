@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,EAAE,EAAE,CAAA;EACL,MAAM,EAAE,eAAe;CAC1B;;AACD,AAAA,KAAK,CAAA;EACD,KAAK,EAAE,GAAG;EACV,MAAM,EAAE,KAAK;CAChB",
+    "sources": [
+        "tic-tac-toe.scss"
+    ],
+    "names": [],
+    "file": "tic-tac-toe.css"
+}
