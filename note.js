@@ -502,3 +502,28 @@ function comp_logic(inDex) {
 
 //             }
 //         }
+
+
+
+
+// function checkForDoubleWinPosition() {
+//     // compPosition has 2 trues inside the array [false,false,true,true,false, false] [1,2,3,4,4,7,8].... solved with array filter
+
+//     let compPosition = computerPlayChecker(player2, "")
+//     var filterValue = compPosition.filter(function (val) {
+//         return val === true
+//     })
+
+//     //  check if array.filter contains more than one value.  use array.length 
+//     product()
+
+
+//     var product = function () {
+
+
+//         let NumberOfTruthValue = filterValue > 1
+//         return NumberOfTruthValue
+//     }
+//     // return true & false
+
+// }

@@ -1,7 +1,103 @@
-table, td{
-    border: 2px solid black;
+body {
+    background-color: grey;
+    margin: 0, 10px;
+animation: textColor 10s linear  infinite alternate;
 }
-table{
+
+// @keyframes textColor {
+  
+// from {
+//         background:   #fff176;
+//     }
+//     to {
+//         background: #808080;
+//     }
+   
+// }
+
+td {
+    transition: border 2s white;
+    width: 20%;
+    height: 20%;
+    border: 5px solid #01579b;
+    margin: none;
+    text-align: center;
+    font-family: Georgia, serif;
+    font-size: 60px;
+    color: white;
+}
+
+table {
     width: 50%;
     height: 500px;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+.row-1 {
+    border-top: none;
+}
+.row-3 {
+    border-bottom: none;
+}
+.col-1 {
+    border-left: none;
+}
+.col-3 {
+    border-right: none;
+}
+
+h2{
+    // text-align: center;
+margin: 0%;  
+font-size: 2rem;
+
+}
+button{
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #01579b;
+    color: whitesmoke;
+    font-weight: bold;
+    outline: none;
+}
+// .button-div{
+// text-align: center;
+// }
+#top-heading{
+    margin: 0% 20%;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    margin-left: 24%;
+
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 800;
+}
+.right-block{
+    margin: 0% 0.5%;
+}
+.left-block{
+    margin: 0% 0.5%;
+}
+#scorekeeper-div{
+    font-size: 1.5rem;
+    margin: auto 15px;
+}
+.scorekeeper{
+margin: 0 3% ;
+font-weight: 900;
+
+}
+#scores{
+    margin-right: 70%;
+    font-weight: 900;
+}
+#player1{
+    margin-right: 10px;
+    font-weight: 900;
+}
+#Player2-Btn{
+    background-color: grey;
 }

@@ -1,5 +1,5 @@
 var squareBoxes = document.getElementsByTagName("td")
-var text = document.querySelector("h1")
+var text = document.querySelector("h2")
 var col_1 = document.querySelectorAll(".col-1")
 var col_2 = document.querySelectorAll(".col-2")
 var col_3 = document.querySelectorAll(".col-3")
@@ -10,6 +10,9 @@ var diag_1 = document.querySelectorAll(".diagonal-1")
 var diag_2 = document.querySelectorAll(".diagonal-2")
 var allLines = [col_1, col_2, col_3, row_1, row_2, row_3, diag_1, diag_2]
 var continueBtn = document.getElementById("Continue")
+var newGameBtn = document.querySelector("#New-Game")
+var player2Btn = document.querySelector("#Player2-Btn")
+var compBtn = document.getElementById("Comp-Btn")
 var scoreKeeper = document.querySelectorAll(".scorekeeper")
 var player1ScoreKeeper = 0
 var player2ScoreKeeper = 0
@@ -42,7 +45,7 @@ for (let i = 0; i < squareBoxes.length; i++) {
                         if (squareBoxes[i].textContent === player1 && squareBoxes[i] !== squareBoxes[4]) {
 
                             player1Array.pop()
-                            text.textContent = "Player One's Turn"
+                            text.textContent = "Player One's Turn: "
                             player2Turn = false
                             poppedOut = true
                             squareBoxes[i].textContent = ""
@@ -67,6 +70,7 @@ for (let i = 0; i < squareBoxes.length; i++) {
 
 continueBtn.addEventListener("click", function () {
     reset()
+    continueBtn.classList.add("animate__bounce")
     if (!player2Turn) {
         text.textContent = "Player One's Turn"
     }
@@ -95,6 +99,37 @@ continueBtn.addEventListener("click", function () {
         }
     }
 })
+continueBtn.addEventListener("webkitAnimationEnd", function(){
+        continueBtn.classList.remove("animate__bounce")
+})
+newGameBtn.addEventListener("click", function () {
+newGame()
+newGameBtn.className = "animate__animated  animate__bounce"
+
+})
+newGameBtn.addEventListener("webkitAnimationEnd", function(){
+    newGameBtn.classList.remove("animate__bounce")
+})
+
+compBtn.addEventListener("click", function() {
+    newGame()
+    vsComputer = true
+    compBtn.style.backgroundColor = "#01579b"
+    compBtn.className = "animate__animated  animate__bounce"
+    player2Btn.style.backgroundColor = "grey"
+    player2Btn.classList.remove("animate__bounce")
+
+
+})
+player2Btn.addEventListener("click", function() {
+    newGame()
+    vsComputer = false
+    compBtn.style.backgroundColor = "grey"
+    compBtn.classList.remove("animate__bounce")
+    player2Btn.style.backgroundColor = "#01579b"
+    player2Btn.className = " animate__animated animate__bounce"
+})
+
 
 function winFunction() {
     for (let w = 0; w < allLines.length; w++) {
@@ -148,7 +183,7 @@ function playerTurn(i) {
                     text.textContent = "Computer Is Playing...."
                 }
                 else {
-                    text.textContent = "Player Two's Turn"
+                    text.textContent = "Player Two's Turn: "
                 }
                 poppedOut = false
                 // player2Turn = true
@@ -170,7 +205,7 @@ function playerTurn(i) {
                     if (player2Array.length < 3) {
                         comp_logic(i)
                         player2Array.push(player2)
-                        text.textContent = "Player One's Turn"
+                        text.textContent = "Player One's Turn: "
                         poppedOut = false;
                         player2Turn = false
                         winFunction()
@@ -183,7 +218,7 @@ function playerTurn(i) {
             if (player2Array.length < 3) {
                 squareBoxes[i].textContent = player2
                 player2Array.push(player2)
-                text.textContent = "Player One's Turn"
+                text.textContent = "Player One's Turn: "
                 poppedOut = false
                 // player2Turn = false
             }
@@ -196,12 +231,7 @@ function playerTurn(i) {
 
 function randomPicker(inputs) {
     randomNumber = Math.floor(Math.random() * squareBoxes.length)
-    randomNumber = 5
-
-    // while ((squareBoxes[inputs].textContent === player1 && squareBoxes[inputs].textContent === squareBoxes[randomNumber].textContent) 
-    // || (squareBoxes[randomNumber].textContent === player2) && (removeRandomNumber === randomNumber)) {
-    //     randomNumber = Math.floor(Math.random() * squareBoxes.length)
-    // }
+    // randomNumber = 3
 
     while (squareBoxes[randomNumber].textContent === player1
         || squareBoxes[randomNumber].textContent === player2
@@ -210,43 +240,10 @@ function randomPicker(inputs) {
     }
 }
 function randomEjector() {
-    // if (checkForDoubleWinPosition) {
-    //     console.log("mad oo")
-    //     // console.log("mad oo", loopstopper)
-    //     // break;
 
-    // }
-    // else {
-    //     removeRandomNumber = Math.floor(Math.random() * squareBoxes.length)
-
-    //     while (squareBoxes[removeRandomNumber].textContent !== player2 || squareBoxes[4] === squareBoxes[removeRandomNumber] || checkColumnAndRow()) {
-    //         // if (checkForDoubleWinPosition) {
-    //         //     console.log("mad oo")
-    //         //     // console.log("mad oo", loopstopper)
-    //         //     break;
-
-    //         // }
-    //         // else {
-    //         //     removeRandomNumber = Math.floor(Math.random() * squareBoxes.length)
-    //         //     console.log("else ran")
-    //         // }
-    //         removeRandomNumber = Math.floor(Math.random() * squareBoxes.length)
-
-    //     }
-    // }
     removeRandomNumber = Math.floor(Math.random() * squareBoxes.length)
 
     while (squareBoxes[removeRandomNumber].textContent !== player2 || squareBoxes[4] === squareBoxes[removeRandomNumber] || checkColumnAndRow()) {
-        // if (checkForDoubleWinPosition) {
-        //     console.log("mad oo")
-        //     // console.log("mad oo", loopstopper)
-        //     break;
-
-        // }
-        // else {
-        //     removeRandomNumber = Math.floor(Math.random() * squareBoxes.length)
-        //     console.log("else ran")
-        // }
         removeRandomNumber = Math.floor(Math.random() * squareBoxes.length)
     }
 }
@@ -255,35 +252,10 @@ function computer(i) {
         randomPicker(i)
         squareBoxes[randomNumber].textContent = player2
         player2Array.push(player2)
-        text.textContent = "Player One's Turn"
+        text.textContent = "Player One's Turn: "
         poppedOut = false
     }
 }
-
-// if number to be removed !== player two or if  =  to mid box randomize
-
-function checkForDoubleWinPosition() {
-    // compPosition has 2 trues inside the array [false,false,true,true,false, false] [1,2,3,4,4,7,8].... solved with array filter
-
-    let compPosition = computerPlayChecker(player2, "")
-    var filterValue = compPosition.filter(function (val) {
-        return val === true
-    })
-
-    //  check if array.filter contains more than one value.  use array.length 
-    product()
-
-
-    var product = function () {
-
-
-        let NumberOfTruthValue = filterValue > 1
-        return NumberOfTruthValue
-    }
-    // return true & false
-
-}
-
 
 function checkColumnAndRow() {
     let compPosition = computerPlayChecker(player2, "")
@@ -329,13 +301,13 @@ function checkColumnAndRow() {
             const endIndex = startIndex + 6
             return smartRemove(startIndex, endIndex, 3)
         }
-        else if (playerPosition.indexOf(true) === 6) {
-            const startIndex = playerPosition.indexOf(true) - 6
+        else if (playerPosition.lastIndexOf(true) === 6) {
+            const startIndex = playerPosition.lastIndexOf(true) - 6
             const endIndex = startIndex + 8
             return smartRemove(startIndex, endIndex, 4)
         }
-        else if (playerPosition.indexOf(true) === 7) {
-            const startIndex = playerPosition.indexOf(true) - 5
+        else if (playerPosition.lastIndexOf(true) === 7) {
+            const startIndex = playerPosition.lastIndexOf(true) - 5
             const endIndex = startIndex + 4
             return smartRemove(startIndex, endIndex, 2)
         }
@@ -345,10 +317,6 @@ function checkColumnAndRow() {
 
 function smartRemove(start_value, end_value, a) {
     const midIndex = start_value + a
-
-    // for(let num = 0; num = squareBoxes.length; num++ ){
-    //     cons
-    // }
     var positn = [start_value, start_value + a, end_value]
     return positn.includes(removeRandomNumber)
 }
@@ -400,22 +368,6 @@ function blockPlayer1(start_value, end_value, a) {
 function comp_logic(inDex) {
     let playerPosition = computerPlayChecker(player1, "")
     let compPosition = computerPlayChecker(player2, "")
-
-    // for (let x = 0, y = 0; x < 3, y < 7; x = x + 1, y = y + 3) {
-    //         let a = y + 3
-    //         //  true false false......... or false true false......... or false false true..... or false false false
-    //         if (playerPosition[x]) {
-    //             blockPlayer1(y, a, 1)
-    //             return
-    //         }
-    //         else if(playerPosition[0] === false && playerPosition[1] === false && playerPosition[2] === false ){
-    //             randomPicker(inDex)
-    //             squareBoxes[randomNumber].textContent = player2
-    //             return
-    //         }
-    // }
-
-
     if (compPosition.includes(true)) {
         console.log("TA-c_L @ cp", compPosition)
         if (compPosition.lastIndexOf(true) === 6) {
@@ -453,15 +405,15 @@ function comp_logic(inDex) {
             const endIndex = startIndex + 6
             blockPlayer1(startIndex, endIndex, 3)
         }
-        else if (playerPosition.indexOf(true) === 6) {
-            const startIndex = playerPosition.indexOf(true) - 6
+        else if (playerPosition.lastIndexOf(true) === 6) {
+            const startIndex = playerPosition.lastIndexOf(true) - 6
             const endIndex = startIndex + 8
             console.log("playerPosition at diag 6", startIndex, endIndex)
 
             blockPlayer1(startIndex, endIndex, 4)
         }
-        else if (playerPosition.indexOf(true) === 7) {
-            const startIndex = playerPosition.indexOf(true) - 5
+        else if (playerPosition.lastIndexOf(true) === 7) {
+            const startIndex = playerPosition.lastIndexOf(true) - 5
             const endIndex = startIndex + 4
             blockPlayer1(startIndex, endIndex, 2)
         }
@@ -487,67 +439,14 @@ function reset() {
     EjectTimer
 }
 
-
-
-
-// function computerDefensePlay(inDex) {
-//     for (let k = 0; k < 2; k++) {
-//         for (let j = 1; j < 3; j++) {
-//             if (k !== j) {
-//                 console.log(k, j)
-//                 // console.log("j" + j + boxes[listIndex][j], "k" + k + boxes[listIndex][k])
-//                 console.log("row" + boxes[j][elementIndex] + "=" + boxes[k][elementIndex], "col " + boxes[listIndex][j] + "=" + boxes[listIndex][k] )
-//                 // console.log("@2 " + "j" + j + boxes[j][elementIndex], "k" + k + boxes[k][elementIndex])
-
-//                 if ((boxes[listIndex][j] === null && boxes[listIndex][k] === null)){
-//                     randomPicker(inDex)
-//                     console.log("@null" + randomNumber)
-//                     // console.log("j" + j + boxes[listIndex][j], "k" + k + boxes[listIndex][k])
-//                     squareBoxes[randomNumber].textContent = player2
-//                     boxNumber = randomNumber
-//                 }
-
-//                 else if ((boxes[listIndex][j] === player1) && (boxes[listIndex][k] === player1)) {
-//                     let null_Column_Index = boxes[listIndex].indexOf(null)
-//                     console.log(null_Column_Index)
-//                     squareBoxes[null_Column_Index].textContent = player2
-//                     boxNumber = null_Column_Index
-//                 }
-//                 else if ((boxes[listIndex][j] === player1 && boxes[listIndex][k] === player2) || (boxes[listIndex][j] === player2 && boxes[listIndex][k] === player1)) {
-//                     randomPicker(inDex)
-//                     console.log('third condition successful')
-//                     squareBoxes[randomNumber].textContent = player2
-//                     boxNumber = randomNumber
-//                 }
-//             }
-//         }
-//     }
-
-// }
-
-// A function that can compare two or more numbers a b & c
-
-// for(let k = 0; k < 2; k++){
-//     for(j = 1; j<3; j++)
-//     if(k !== j){
-//         console.log("j" + j, "k"+ k)
-//         if( boxes[listIndex][j] && boxes[listIndex][k] === player1){
-// console.log("worked")
-//     }   
-// }
-
-// function compBoxIndex(randomIndex, divisor){
-// compListIndex = Math.floor(randomIndex / divisor)
-// CompElementIndex = randomIndex % divisor
-// }
-// function compBoxIndex(i, divisor) {
-//     listIndex = Math.floor(i / divisor)
-//     elementIndex = i % divisor
-//     return [listIndex, elementIndex]
-// }
-// function winner(){
-//     if(squareBoxes[1].textContent === squareBoxes[0].textContent === squareBoxes[2].textContent){
-//         alert("Winner")
-//     }
-// }
+function newGame() {
+    reset()
+    player2Turn = false
+    player1ScoreKeeper = 0
+    player2ScoreKeeper = 0
+    compScoreKeeper = 0
+    for (let i = 0; i < scoreKeeper.length; i++) {
+        scoreKeeper[i].textContent = 0
+    }
+}
 
